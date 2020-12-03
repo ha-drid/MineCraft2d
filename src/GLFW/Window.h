@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 
 #include "../Game/World.h"
+#include "../size.h"
 
 class Window
 {

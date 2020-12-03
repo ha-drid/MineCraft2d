@@ -2,77 +2,86 @@
 
 World::World()
 {
-	block.resize(200);
+	block.resize(world_size_y);
+	for (int i = 0; i < world_size_y; ++i)
+	{
+		block[i].resize(world_size_x);
+	}
 }
 
 void World::init()
 {
-	player.init(0, 1, 1, 2);
-}
-
-
-void World::show()
-{
 	std::vector<std::string> map = {
-		{"########..####"},
-		{"##############"},
-		{"#......#.....#"},
-		{"#.....#i.#...#"},
-		{"#....#.i.....#"},
-		{"#..########..#"},
-		{"#..########..#"},
-		{"#..########..#"},
-		{"#..########..#"},
-		{"#............#"},
-		{"#............#"},
-		{"#............#"},
-		{"##############"}
+		{"########..#############... #............."},
+		{"############..........#.....#............"},
+		{"#.....................#......#..........."},
+		{"#........#............#.......#.........."},
+		{"#....#................#........#........."},
+		{"#..########...........#.........#........"},
+		{"#..########..i........#..........#......."},
+		{"#..########..i.#......#...........#......"},
+		{"#..#######..#.........#............#....."},
+		{"##.............#.#.#..#..............#..."},
+		{"#.#...................................#.."},
+		{"#..#...................................#."},
+		{"#################################.......#"}
 	};
-	
-	glLoadIdentity();
-	glScalef(2.0f / 20, 2.0f / 15, 1);
-
-	int block_cnt = 0;
-	int* p_blockcnt = &block_cnt;
 
 	for (int i = 0; i < map.size(); ++i)
 	{
-		glPushMatrix();
-		for (int t = 0; t < map[i].size(); ++t)
+		for (int j = 0; j < map[i].size(); ++j)
 		{
-			if (map[i][t] = '#') {
-				
-				++* p_blockcnt;
+			if (map[i][j] == '#') {
+				block[i][j].init(j, i, 1, -1, 1);
 			}
-
-			if (map[i][t] == 'i' && (map[i + 1][t] == 'i')) {
-				player.init(t, i, 1, 2);
+			else if ((map[i][j] == '.') || (map[i][j] == ' ')) {
+				block[i][j].init(j, i, 1, -1, 0);
+			}
+			if (map[i][j] == 'i' && map[i + 1][j] == 'i') {
+				player.init(j + 0.1, i, 0.8f, -1.6f);
 			}
 		}
-		glPopMatrix();
 	}
-
-	block.resize(block_cnt);
-	//for (int i = 0; i < map.size(); ++i)
-	//{
-	//	for (int n = 0; n < map[i].size(); ++n)
-	//	{
-	//		glPushMatrix();
-	//		glTranslatef(n, i, 0);
-	//		if (map[i][n] == '#') {
-	//			block[block_size].draw();
-	//			++*p_blocksize;
-	//		}
-	//
-	//		glPopMatrix();
-	//	}
-	//}
 	
+}
+
+void World::draw_block(int begin, int end)
+{
+	for (int i = begin; i < end; ++i)
+		for (int n = 0; n < block[i].size(); ++n)
+			block[i][n].draw();
+}
+
+void World::show()
+{
+	glLoadIdentity();
+	glScalef(2.0f / visible_part_world_by_player_x, 2.0f / visible_part_world_by_player_y, 1);
+
+	glTranslatef(-visible_part_world_by_player_x * 0.5, (-visible_part_world_by_player_y + 2) * 0.5, 0);
+	//glTranslatef(-visible_part_world_by_player_x / 3,0, 0);
+
+	//std::thread th1(&draw_block, 0, 5);
+	//th1.detach();
+	//std::thread th2(&draw_block, 0, 5);
+	//th2.detach();
+	//std::thread th3(&draw_block, 0, 5);
+	//th3.detach();
+	//std::thread th4(&draw_block, 0, 5);
+	//th4.detach();
+	draw_block(0, 20);
+
+	player.draw();
 }
 
 void World::vertMove(float Gravity)
 {
-	//player.vertMove(Gravity);
+	player.vertMove(Gravity, block);
+}
+
+void World::player_move(GLFWwindow* window)
+{
+	player.move(window, block);
+	player.put_blocks(window, block);
 }
 
 World::~World()

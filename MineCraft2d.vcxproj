@@ -174,6 +174,10 @@
     <ClInclude Include="src\GLFW\GLFW.h" />
     <ClInclude Include="src\GLFW\Window.h" />
     <ClInclude Include="src\Game\World.h" />
+    <ClInclude Include="src\size.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitattributes" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

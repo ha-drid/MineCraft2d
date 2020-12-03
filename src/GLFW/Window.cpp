@@ -24,10 +24,12 @@ void Window::loop()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		world.show();
-		world.vertMove(-0.01f);
+		world.vertMove(0.003f);
+		world.player_move(window);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-		std::this_thread::sleep_for(std::chrono::milliseconds(50));
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 }
 

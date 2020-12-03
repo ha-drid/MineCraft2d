@@ -16,32 +16,130 @@ void Player::init(float x, float y, float width, float height)
 	this->width = width;
 	this->height = height;
 	vertSpeed = 0;
+	click = 0;
 }
 
 void Player::draw()
 {
-	float pos[] = { x, y, x + width, y, x + width, y + height, x, y + height };
+	float pos[] = { x,y,  x + width,y  ,x + width,   y + height,x,  y + height };
 	uint32_t index[] = { 1,2,3,3,0,1 };
 
 	glVertexPointer(2, GL_FLOAT, 0, &pos);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	
-	glColor3f(0, 1, 0);
+	glColor3f(1, 1, 1);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, &index);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
 
-void Player::vertMove(float Gravity)
+void Player::vertMove(float Gravity, std::vector<std::vector<Block>> block)
 {
+	isFly = true;
 	vertSpeed += Gravity;
-	setPos(x, y + vertSpeed);
+
+	for (int i = 0; i < block.size(); ++i)
+	{
+		for (int j = 0; j < block[i].size(); ++j) 
+		{
+			if (isColision(block[i][j]))
+			{
+				std::cout << "perty\n";
+				isFly = false;
+				y += vertSpeed;
+				round(y);
+				vertSpeed = 0;
+				break;
+			}
+		}
+	}
+	setPos(x, y - vertSpeed);
 }
 
-//для того чтобы понимать столнкулись мы с обьектом или нет
-bool Player::ray_cast()
+void Player::move(GLFWwindow* window, std::vector<std::vector<Block>>& block)
 {
-	return false;
+	int state_space = glfwGetKey(window, GLFW_KEY_SPACE);
+	if (state_space == GLFW_PRESS && !isFly)
+	{
+		vertSpeed = 0.1f;
+	}
+
+	int state_a = glfwGetKey(window, GLFW_KEY_A);
+	if (state_a == GLFW_PRESS)
+	{
+		horizon_move(block, 0.1f);
+	}
+
+	int state_d = glfwGetKey(window, GLFW_KEY_D);
+	if (state_d == GLFW_PRESS)
+	{
+		horizon_move(block, -0.1f);
+	}
+}
+
+void Player::horizon_move(std::vector<std::vector<Block>>& block, float dx)
+{
+	//x -= dx;
+	//for (int i = 0; i < block.size(); ++i)
+	//{
+	//	for (int j = 0; j < block[i].size(); ++j) {
+	//		if (isColision(block[i][j]))
+	//		{
+	//			x += dx;
+	//			return;
+	//		}
+	//	}
+	//}
+	//x += dx;
+
+	for (int i = 0; i < block.size(); ++i)
+	{
+		for (int j = 0; j < block[i].size(); ++j) {
+			block[i][j].x += dx;
+		}
+	}
+	click -= dx;
+}
+
+void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& block)
+{
+	double y_pos, y_GL;
+	double x_pos, x_GL;
+	glfwGetCursorPos(window, &x_pos, &y_pos);
+	system("cls");
+	y_GL = y_pos / height_window * visible_part_world_by_player_y;
+	x_GL = x_pos / width_window * visible_part_world_by_player_x;
+
+	int iY = (int)trunc(y_GL);
+	int iX = (int)trunc(x_GL);
+	int c = (int)trunc(click);
+
+	std::cout << "cursor y gl :" << iY << std::endl;
+	std::cout << "cursor x gl :" << iX + c << std::endl;
+	std::cout << "click :" << c << std::endl;
+
+	int state_right = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT);
+	if (state_right == GLFW_PRESS)
+	{
+		for (int i = 0; i < block.size(); ++i)
+		{
+			for (int j = 0; j < block[i].size(); ++j)
+			{
+				if ((-iY == floor(block[i][j].y)) && (iX + c == trunc(block[i][j].x)))
+				{
+					std::cout << "true\n";
+					return;
+				}
+			}
+		}
+	}
+
+}
+
+bool Player::isColision(Block block)
+{
+	return ((x + width) > block.x) && (x < (block.x + block.width)) &&
+		((y + height) > block.y) && (y < (block.y + block.height));
 }
 
 Player::~Player()

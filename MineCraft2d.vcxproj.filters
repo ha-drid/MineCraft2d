@@ -50,5 +50,11 @@
     <ClInclude Include="src\Game\Block.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\size.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitattributes" />
   </ItemGroup>
 </Project>

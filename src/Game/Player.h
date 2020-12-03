@@ -1,9 +1,14 @@
 #pragma once
 #include <iostream>
 #include <vector>
-
+#include <cstdio>
+#include <thread>
+#include <chrono>
 #include <GLFW/glfw3.h>
 #include <gl/GL.h>
+
+#include "Block.h"
+#include "../size.h"
 
 class Player
 {
@@ -12,12 +17,17 @@ public:
 	void setPos(float x, float y);
 	void init(float x, float y, float width, float height);
 	void draw();
-	void vertMove(float Gravity);
-	bool ray_cast();//для того чтобы понимать столнкулись мы с обьектом или нет
+	void vertMove(float Gravity, std::vector<std::vector<Block>> block);
+	void move(GLFWwindow* window, std::vector<std::vector<Block>>& block);
+	void horizon_move(std::vector<std::vector<Block>>& block, float dx);
+	void put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& block);
+	bool isColision(Block block);
 	~Player();
 private:
 	float x, y;
 	float width, height;
 	float vertSpeed;
+	float click;
+	bool isFly;
 };
 
