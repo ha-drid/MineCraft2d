@@ -12,12 +12,12 @@ public:
 	void setPos(float x, float y);
 	void init(float x, float y, float width, float height, int type_block);
 	void draw();
+	bool isEmpty();
 	~Block();
 	friend Player;
 private:
-	int type_block;
+	uint32_t type_block = 0;
 	float x, y;
 	float width, height;
-	bool isEmpty;
 };
 

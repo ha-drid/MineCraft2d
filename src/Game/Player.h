@@ -27,7 +27,6 @@ private:
 	float x, y;
 	float width, height;
 	float vertSpeed;
-	float click;
 	bool isFly;
 };
 
