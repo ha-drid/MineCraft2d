@@ -21,6 +21,7 @@ void Window::loop()
 	world.init();
 	while (!glfwWindowShouldClose(window))
 	{
+		glClearColor(0.4f, 0.4f, 1.0f, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		world.show();
@@ -29,7 +30,7 @@ void Window::loop()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
-		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 }
 

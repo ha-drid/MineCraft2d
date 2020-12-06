@@ -5,6 +5,7 @@
 #include <thread>
 #include "Player.h"
 #include "Block.h"
+#include "draw.h"
 #include "../size.h"
 
 class World
@@ -12,7 +13,6 @@ class World
 public:
 	World();
 	void init();
-	void draw_block(int begin, int end);
 	void show();
 	void vertMove(float Gravity);
 	void player_move(GLFWwindow* window);

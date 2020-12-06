@@ -170,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game\Block.h" />
+    <ClInclude Include="src\Game\draw.h" />
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\GLFW\GLFW.h" />
     <ClInclude Include="src\GLFW\Window.h" />
