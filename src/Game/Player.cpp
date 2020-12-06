@@ -18,20 +18,6 @@ void Player::init(float x, float y, float width, float height)
 	vertSpeed = 0;
 }
 
-void Player::draw()
-{
-	float pos[] = { x,y,  x + width,y  ,x + width,   y + height,x,  y + height };
-	uint32_t index[] = { 1,2,3,3,0,1 };
-
-	glVertexPointer(2, GL_FLOAT, 0, &pos);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	
-	glColor3f(1, 1, 1);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, &index);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-}
-
 void Player::vertMove(float Gravity, std::vector<std::vector<Block>> block)
 {
 	isFly = true;
@@ -66,13 +52,13 @@ void Player::move(GLFWwindow* window, std::vector<std::vector<Block>>& block)
 	int state_a = glfwGetKey(window, GLFW_KEY_A);
 	if (state_a == GLFW_PRESS)
 	{
-		horizon_move(block, 0.02f);
+		horizon_move(block, 0.01f);
 	}
 
 	int state_d = glfwGetKey(window, GLFW_KEY_D);
 	if (state_d == GLFW_PRESS)
 	{
-		horizon_move(block, -0.02f);
+		horizon_move(block, -0.01f);
 	}
 }
 
@@ -113,10 +99,6 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 	int iY = (int)trunc(y_GL);
 	int iX = (int)trunc(x_GL);
 
-	system("cls");
-	std::cout << "cursor y gl :" << -iY << std::endl;
-	std::cout << "cursor x gl :" << iX << std::endl;
-
 	int state = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT);
 	if (state == GLFW_PRESS)
 	{
@@ -154,7 +136,7 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 bool Player::isColision(Block block)
 {
 	return ((x + width) > block.x) && (x < (block.x + block.width)) &&
-		((-y + -height) > block.y) && (y < (-block.y + -block.height));
+		((y + height) >= block.y) && (y <= (block.y + block.height));
 }
 
 Player::~Player()

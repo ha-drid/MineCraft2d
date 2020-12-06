@@ -17,6 +17,7 @@ public:
 	void vertMove(float Gravity);
 	void player_move(GLFWwindow* window);
 	~World();
+	friend void foo(int begin, int end, int begin1, int end1);
 private:
 	Player player;
 	std::vector<std::vector<Block>> block;

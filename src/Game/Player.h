@@ -16,13 +16,13 @@ public:
 	Player();
 	void setPos(float x, float y);
 	void init(float x, float y, float width, float height);
-	void draw();
 	void vertMove(float Gravity, std::vector<std::vector<Block>> block);
 	void move(GLFWwindow* window, std::vector<std::vector<Block>>& block);
 	void horizon_move(std::vector<std::vector<Block>>& block, float dx);
 	void put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& block);
 	bool isColision(Block block);
 	~Player();
+	friend void player_draw(Player player);
 private:
 	float x, y;
 	float width, height;
