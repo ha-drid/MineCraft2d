@@ -3,6 +3,8 @@
 #include <vector>
 #include <GLFW/glfw3.h>
 
+#include "../type.h"
+
 class Player;
 
 class Block
@@ -16,7 +18,7 @@ public:
 	friend Player;
 	friend void block_draw(Block draw);
 private:
-	uint32_t type_block = 0;
+	uint32_t type_block = Empty;
 	float x, y;
 	float width, height;
 };

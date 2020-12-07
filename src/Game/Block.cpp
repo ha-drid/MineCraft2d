@@ -21,7 +21,7 @@ void Block::init(float x, float y, float width, float height, int type_block)
 
 bool Block::isEmpty()
 {
-	return (type_block == 0);
+	return (type_block == Empty);
 }
 
 Block::~Block()
