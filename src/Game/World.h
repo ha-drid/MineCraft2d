@@ -17,6 +17,7 @@ public:
 	void player_move(GLFWwindow* window);
 	~World();
 private:
+	void block_render(int begin, int end);
 	Player player;
 	std::vector<std::vector<Block>> block;
 };

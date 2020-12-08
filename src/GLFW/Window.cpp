@@ -24,9 +24,9 @@ void Window::loop()
 		glClearColor(0.4f, 0.4f, 1.0f, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//glLoadIdentity();
+		glLoadIdentity();
 		world.show();
-		world.vertMove(0.0003);
+		world.vertMove(0.0002);
 		world.player_move(window);
 		glfwSwapBuffers(window);
 		glfwPollEvents();

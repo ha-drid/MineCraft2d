@@ -67,5 +67,8 @@
     <Image Include="img\Grass.jpg">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="img\Undefined.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

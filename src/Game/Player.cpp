@@ -108,7 +108,7 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 			{
 				if (((int)round(block[i][j].x) == iX) && 
 					((int)round(block[i][j].y) == -iY) && 
-					(block[i][j].type_block != Bedrok))
+					(block[i][j].isEmpty()))
 				{
 					block[i][j].type_block = Grass;
 					return;

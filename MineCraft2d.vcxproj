@@ -182,6 +182,7 @@
     <None Include=".gitattributes" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="img\Undefined.jpg" />
     <Image Include="img\Grass.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

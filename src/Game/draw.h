@@ -8,17 +8,15 @@
 
 float pos[] = { 1,-8,  9,-8,  9,-1,  1,-1 };
 float texture_coord[] = { 0,1,  1,1,  1,0,  0,0 };
-uint32_t texture_grass;
+
+uint32_t grass_texture;
+uint32_t undefined_texture;
 
 static void texture_load(uint32_t* texture, std::string file)
 {
 	int width, height, cnt;
 	unsigned char* data = stbi_load(file.c_str(), &width, &height, &cnt, 0);
-	system("cls");
-	std::cout << "width:" << width << std::endl;
-	std::cout << "height:" << height << std::endl;
-	std::cout << "cnt:" << cnt << std::endl;
-
+	
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_2D, *texture);
 
@@ -33,29 +31,17 @@ static void texture_load(uint32_t* texture, std::string file)
 	stbi_image_free(data);
 }
 
-static void load()
-{
-	GLuint index[] = { 1,2,3, 3,0,1 };
-
-	glColor4f(1, 1, 1, 1);
-
-	glVertexPointer(2, GL_FLOAT, 0, &pos);
-	glTexCoordPointer(2, GL_FLOAT, 0, &texture_coord);
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, &index);
-
-	glDisableClientState(GL_VERTEX_ARRAY);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-}
-
 static void block_draw(Block block)
-{
+{;
 	glEnable(GL_TEXTURE_2D);
-	if (block.type_block == Grass) {
-		glBindTexture(GL_TEXTURE_2D, texture_grass);
+	if (block.type_block == Bedrok) {
+		glBindTexture(GL_TEXTURE_2D, grass_texture);
+	}
+	else if (block.type_block == Grass) {
+		glBindTexture(GL_TEXTURE_2D, grass_texture);
+	}
+	else {
+		glBindTexture(GL_TEXTURE_2D, undefined_texture);
 	}
 
 	float pos[] = { block.x, block.y,
@@ -92,7 +78,7 @@ static void player_draw(Player player)
 	glVertexPointer(2, GL_FLOAT, 0, &pos);
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-	glColor3f(1, 0, 1);
+	glColor3f(1, 1, 1);
 	glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, &index);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
