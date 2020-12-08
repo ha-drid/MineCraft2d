@@ -6,27 +6,28 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
-float pos[] = { 0,0, 5,0,  5,-5,  0,-5};
+float pos[] = { 1,-8,  9,-8,  9,-1,  1,-1 };
 float texture_coord[] = { 0,1,  1,1,  1,0,  0,0 };
-uint32_t texture;
+uint32_t texture_grass;
 
-static void texture_load()
+static void texture_load(uint32_t* texture, std::string file)
 {
 	int width, height, cnt;
-	unsigned char* data = stbi_load("C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\src\\Game\\Grass.jpg", &width, &height, &cnt, 0);
+	unsigned char* data = stbi_load(file.c_str(), &width, &height, &cnt, 0);
 	system("cls");
 	std::cout << "width:" << width << std::endl;
 	std::cout << "height:" << height << std::endl;
+	std::cout << "cnt:" << cnt << std::endl;
 
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glGenTextures(1, texture);
+	glBindTexture(GL_TEXTURE_2D, *texture);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height,
-								0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width - 1, height - 1,
+								0, cnt == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(data);
@@ -34,27 +35,29 @@ static void texture_load()
 
 static void load()
 {
-	glColor3f(1, 1, 1);
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	GLuint index[] = { 1,2,3, 3,0,1 };
 
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glColor4f(1, 1, 1, 1);
 
 	glVertexPointer(2, GL_FLOAT, 0, &pos);
 	glTexCoordPointer(2, GL_FLOAT, 0, &texture_coord);
 
-	glDrawArrays(GL_POLYGON, 0, 4);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, &index);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
-	//glDisable(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 static void block_draw(Block block)
 {
+	glEnable(GL_TEXTURE_2D);
+	if (block.type_block == Grass) {
+		glBindTexture(GL_TEXTURE_2D, texture_grass);
+	}
+
 	float pos[] = { block.x, block.y,
 					block.x + block.width,block.y,
 					block.x + block.width,  block.y + block.height,
@@ -62,13 +65,17 @@ static void block_draw(Block block)
 	};
 	uint32_t index[] = { 0,1,2,3,0,2 };
 
-	glColor3f(0, 1, 1);
+	glColor3f(1, 1, 1);
 	glVertexPointer(2, GL_FLOAT, 0, &pos);
-	glEnableClientState(GL_VERTEX_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, &texture_coord);
 
-	glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, &index);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, &index);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 

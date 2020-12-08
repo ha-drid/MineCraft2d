@@ -12,7 +12,7 @@ World::World()
 
 void World::init()
 {
-	texture_load();
+	texture_load(&texture_grass, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Grass.jpg");
 	std::vector<std::string> map = {
 		{"#########################################"},
 		{"#.......................................#"},
@@ -67,13 +67,14 @@ void World::show()
 
 	glTranslatef(-visible_part_world_by_player_x * 0.5, (-visible_part_world_by_player_y + 2) * 0.5, 0);
 	glTranslatef(0, visible_part_world_by_player_y - 2, 0);
-	load();
+
 	for (int i = 0; i < block.size(); ++i)
 		for (int n = 0; n < block[i].size(); ++n) {
 			if (!block[i][n].isEmpty())
 				block_draw(block[i][n]);
 		}
 	player_draw(player);
+
 	glPopMatrix();
 }                               
 
