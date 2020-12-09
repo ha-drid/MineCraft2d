@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Mob.cpp" />
     <ClCompile Include="src\Game\Block.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\GLFW\GLFW.cpp" />
@@ -169,8 +170,9 @@
     <ClCompile Include="src\Game\World.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game\Mob.h" />
     <ClInclude Include="src\Game\Block.h" />
-    <ClInclude Include="src\Game\draw.h" />
+    <ClInclude Include="src\Game\GL.h" />
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\GLFW\GLFW.h" />
     <ClInclude Include="src\GLFW\Window.h" />
@@ -180,10 +182,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="img\Bedrok.jpg" />
+    <Image Include="img\Coal ore.png" />
+    <Image Include="img\coblestone.png" />
+    <Image Include="img\Dimond ore.jpg" />
+    <Image Include="img\Foliage.png" />
+    <Image Include="img\Gold ore.png" />
+    <Image Include="img\Iron ore.png" />
+    <Image Include="img\Redstone ore.jpg" />
+    <Image Include="img\Stone.jpg" />
     <Image Include="img\Undefined.jpg" />
     <Image Include="img\Grass.jpg" />
+    <Image Include="img\Wood.jpg" />
+    <Image Include="img\Wood1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

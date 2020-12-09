@@ -33,6 +33,9 @@
     <ClCompile Include="src\Game\Block.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Mob.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GLFW\GLFW.h">
@@ -56,18 +59,55 @@
     <ClInclude Include="src\type.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game\draw.h">
+    <ClInclude Include="src\Game\GL.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game\Mob.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitattributes" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="img\Grass.jpg">
       <Filter>Файлы ресурсов</Filter>
     </Image>
     <Image Include="img\Undefined.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Bedrok.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Coal ore.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\coblestone.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Dimond ore.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Foliage.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Iron ore.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Redstone ore.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Stone.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Wood.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Wood1.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="img\Gold ore.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
   </ItemGroup>

@@ -11,12 +11,19 @@ float texture_coord[] = { 0,1,  1,1,  1,0,  0,0 };
 
 uint32_t grass_texture;
 uint32_t undefined_texture;
+uint32_t bedrok_texture;
+uint32_t stone_texture;
+uint32_t wood_texture;
+uint32_t foliage_texture;
+uint32_t iron_ore_texture;
+uint32_t dimond_ore_texture;
+uint32_t gold_ore_texture;
 
 static void texture_load(uint32_t* texture, std::string file)
 {
 	int width, height, cnt;
 	unsigned char* data = stbi_load(file.c_str(), &width, &height, &cnt, 0);
-	
+
 	glGenTextures(1, texture);
 	glBindTexture(GL_TEXTURE_2D, *texture);
 
@@ -24,9 +31,10 @@ static void texture_load(uint32_t* texture, std::string file)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width - 1, height - 1,
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 
 								0, cnt == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, data);
-	
+
 	glBindTexture(GL_TEXTURE_2D, 0);
 	stbi_image_free(data);
 }
@@ -34,24 +42,28 @@ static void texture_load(uint32_t* texture, std::string file)
 static void block_draw(Block block)
 {;
 	glEnable(GL_TEXTURE_2D);
-	if (block.type_block == Bedrok) {
-		glBindTexture(GL_TEXTURE_2D, grass_texture);
-	}
-	else if (block.type_block == Grass) {
-		glBindTexture(GL_TEXTURE_2D, grass_texture);
-	}
-	else {
-		glBindTexture(GL_TEXTURE_2D, undefined_texture);
+	//Texture
+	switch (block.type_block)
+	{
+	case(Bedrok): glBindTexture(GL_TEXTURE_2D, bedrok_texture); break;
+	case(Grass): glBindTexture(GL_TEXTURE_2D, grass_texture); break;
+	case(Stone): glBindTexture(GL_TEXTURE_2D, stone_texture); break;
+	case(Wood): glBindTexture(GL_TEXTURE_2D, wood_texture); break;
+	case(Foliage): glBindTexture(GL_TEXTURE_2D, foliage_texture); break;
+	case(Iron_Ores): glBindTexture(GL_TEXTURE_2D, iron_ore_texture); break;
+	case(Dimond_Ores): glBindTexture(GL_TEXTURE_2D, dimond_ore_texture); break;
+	case(Gold_Ores): glBindTexture(GL_TEXTURE_2D, gold_ore_texture); break;
+	default: glBindTexture(GL_TEXTURE_2D, undefined_texture); break;
 	}
 
 	float pos[] = { block.x, block.y,
-					block.x + block.width,block.y,
-					block.x + block.width,  block.y + block.height,
+					block.x + block.width, block.y,
+					block.x + block.width, block.y + block.height,
 					block.x,block.y + block.height,
 	};
 	uint32_t index[] = { 0,1,2,3,0,2 };
 
-	glColor3f(1, 1, 1);
+	glColor4f(1, 1, 1, 1);
 	glVertexPointer(2, GL_FLOAT, 0, &pos);
 	glTexCoordPointer(2, GL_FLOAT, 0, &texture_coord);
 

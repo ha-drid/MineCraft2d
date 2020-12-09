@@ -9,5 +9,11 @@ enum Block_Type
 	Wood,
 	Foliage,
 	Iron_Ores,
-	Bronze_Ores,
+	Dimond_Ores,
+	Gold_Ores,
+};
+
+enum Mob_Type
+{
+	Test,
 };

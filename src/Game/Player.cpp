@@ -52,40 +52,55 @@ void Player::move(GLFWwindow* window, std::vector<std::vector<Block>>& block)
 	int state_a = glfwGetKey(window, GLFW_KEY_A);
 	if (state_a == GLFW_PRESS)
 	{
-		horizon_move(block, 0.01f);
+		horizon_move(block, 0.015f);
 	}
 
 	int state_d = glfwGetKey(window, GLFW_KEY_D);
 	if (state_d == GLFW_PRESS)
 	{
-		horizon_move(block, -0.01f);
+		horizon_move(block, -0.015f);
 	}
 }
 
 void Player::horizon_move(std::vector<std::vector<Block>>& block, float dx)
 {
+	//это для проверки не столкнемся ли мы если подвижемся
 	x -= dx;
 	for (int i = 0; i < block.size(); ++i)
 	{
-		for (int j = 0; j < block[i].size(); ++j) {
-			if (!block[i][j].isEmpty()) 
+		for (int j = 0; j < block[0].size(); ++j) {
+			if (!block[i][j].isEmpty())
 			{
 				if (isColision(block[i][j]))
 				{
 					x += dx;
-					return;
+					return; 
 				}
 			}
 		}
 	}
 	x += dx;
-
-	for (int i = 0; i < block.size(); ++i)
+	//лямда для свайпинга карты
+	auto f = [&](int begin, int end)
 	{
-		for (int j = 0; j < block[i].size(); ++j) {
-			block[i][j].x += dx;
+		for (int i = begin; i < end; ++i)
+		{
+			for (int j = 0; j < block[0].size(); ++j) {
+				block[i][j].x += dx;
+			}
 		}
-	}
+	};
+	std::thread th1(f, 0, 4);
+	std::thread th2(f, 4, 8);
+	std::thread th3(f, 8, 12);
+	std::thread th4(f, 12, 16);
+	std::thread th5(f, 16, 20);
+
+	th1.join();
+	th2.join();
+	th3.join();
+	th4.join();
+	th5.join();
 }
 
 void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& block)
@@ -106,8 +121,8 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 		{
 			for (int j = 0; j < block[i].size(); ++j)
 			{
-				if (((int)round(block[i][j].x) == iX) && 
-					((int)round(block[i][j].y) == -iY) && 
+				if (((int)round(block[i][j].x) == iX) &&
+					((int)round(block[i][j].y) == -iY) &&
 					(block[i][j].isEmpty()))
 				{
 					block[i][j].type_block = Grass;
@@ -131,6 +146,7 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 			}
 		}
 	}
+
 }
 
 bool Player::isColision(Block block)

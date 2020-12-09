@@ -16,6 +16,7 @@ public:
 	bool isEmpty();
 	~Block();
 	friend Player;
+	friend Mob;
 	friend void block_draw(Block draw);
 private:
 	uint32_t type_block = Empty;
