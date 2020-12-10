@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\GL.cpp" />
     <ClCompile Include="src\Game\Mob.cpp" />
     <ClCompile Include="src\Game\Block.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
@@ -185,19 +186,16 @@
     <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="img\Bedrok.jpg" />
-    <Image Include="img\Coal ore.png" />
-    <Image Include="img\coblestone.png" />
-    <Image Include="img\Dimond ore.jpg" />
-    <Image Include="img\Foliage.png" />
-    <Image Include="img\Gold ore.png" />
-    <Image Include="img\Iron ore.png" />
-    <Image Include="img\Redstone ore.jpg" />
-    <Image Include="img\Stone.jpg" />
-    <Image Include="img\Undefined.jpg" />
-    <Image Include="img\Grass.jpg" />
-    <Image Include="img\Wood.jpg" />
-    <Image Include="img\Wood1.png" />
+    <Image Include="img\Block\Bedrok.bmp" />
+    <Image Include="img\Block\Dimond ore.bmp" />
+    <Image Include="img\Block\Foliage.bmp" />
+    <Image Include="img\Block\Gold ore.bmp" />
+    <Image Include="img\Block\Grass.bmp" />
+    <Image Include="img\Block\Iron ore.bmp" />
+    <Image Include="img\Block\Soil.bmp" />
+    <Image Include="img\Block\Stone.bmp" />
+    <Image Include="img\Block\Undefined.bmp" />
+    <Image Include="img\Block\Wood.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

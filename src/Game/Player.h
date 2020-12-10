@@ -22,7 +22,7 @@ public:
 	void put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& block);
 	bool isColision(Block block);
 	~Player();
-	friend void player_draw(Player player);
+	friend GL;
 private:
 	float x, y;
 	float width, height;

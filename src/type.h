@@ -3,8 +3,10 @@
 enum Block_Type
 {
 	Empty,
+	Undefined,
 	Bedrok,
 	Grass,
+	Soil,
 	Stone,
 	Wood,
 	Foliage,

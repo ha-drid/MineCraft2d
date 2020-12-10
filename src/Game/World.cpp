@@ -1,5 +1,4 @@
 #include "World.h"
-#include "GL.h"
 
 World::World()
 {
@@ -20,13 +19,13 @@ void World::init()
 		{"#.......................................#"},//5
 		{"#.........................ffffffff......#"},//6
 		{"#.......................ffffffffffff....#"},//7
-		{"#.............................w.........#"},//8
+		{"#...............uuuuu.........w.........#"},//8
 		{"#.............................w.........#"},//9
 		{"#...........p.................w.........#"},//10
 		{"#...........p.................w.........#"},//11
 		{"#.............................w.........#"},//12
 		{"#ggggggggggggggggggggggggggggggggggggggg#"},//13
-		{"#sssssssssssssssssssssssssssssssssssssss#"},//14
+		{"#ggggggggggggggggggggggggggggggggggggggg#"},//14
 		{"#sssssssssssssssssssssssssssssssssssssss#"},//15
 		{"#sssssssssssssssssssssssssssssssssssssss#"},//16
 		{"#.......................................#"},//17
@@ -39,29 +38,11 @@ void World::init()
 	{
 		for (int j = 0; j < map[i].size(); ++j)
 		{
-			//if (map[i][j] == '#') {
-			//	block[i][j].init(j, -i, 1, 1, Bedrok);
-			//}
-			//else if (map[i][j] == 'g') {
-			//	block[i][j].init(j, -i, 1, 1, Grass);
-			//}
-			//else if (map[i][j] == 's') {
-			//	block[i][j].init(j, -i, 1, 1, Stone);
-			//}
-			//else if (map[i][j] == 't') {
-			//	block[i][j].init(j, -i, 1, 1, Wood);
-			//}
-			//else if (map[i][j] == 'f') {
-			//	block[i][j].init(j, -i, 1, 1, Foliage);
-			//}
-			//else if (map[i][j] == 'I') {
-			//	block[i][j].init(j, -i, 1, 1, Iron_Ores);
-			//}
-			//else if ((map[i][j] == '.') || (map[i][j] == ' ') || (map[i][j] == 'i')) {
-			//	block[i][j].init(j, -i, 1, 1, Empty);
-			//}
 			switch (map[i][j])
 			{
+			case(' '):
+			case('.'):
+			case('p'): block[i][j].init(j, -i, 1, 1, Empty); break;
 			case('#'): block[i][j].init(j, -i, 1, 1, Bedrok); break;
 			case('g'): block[i][j].init(j, -i, 1, 1, Grass); break;
 			case('s'): block[i][j].init(j, -i, 1, 1, Stone); break;
@@ -70,7 +51,7 @@ void World::init()
 			case('I'): block[i][j].init(j, -i, 1, 1, Iron_Ores); break;
 			case('D'): block[i][j].init(j, -i, 1, 1, Dimond_Ores); break;
 			case('G'): block[i][j].init(j, -i, 1, 1, Gold_Ores); break;
-			default:   block[i][j].init(j, -i, 1, 1, Empty); break;
+			default:   block[i][j].init(j, -i, 1, 1, Undefined); break;
 			}
 
 
@@ -79,15 +60,16 @@ void World::init()
 			}
 		}
 	}
-	texture_load(&bedrok_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Bedrok.jpg");
-	texture_load(&grass_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Grass.jpg");
-	texture_load(&undefined_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Undefined.jpg");
-	texture_load(&stone_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Stone.jpg");
-	texture_load(&wood_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Wood.jpg");
-	texture_load(&foliage_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Foliage.png");
-	texture_load(&iron_ore_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Iron ore.png");
-	texture_load(&dimond_ore_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Dimond ore.jpg");
-	texture_load(&gold_ore_texture, "C:\\Users\\User\\Documents\\c project\\repos\\MineCraft2d\\img\\Gold ore.png");
+	gl.texture_load(&gl.bedrok_texture, "img\\Block\\Bedrok.bmp");
+	gl.texture_load(&gl.grass_texture, "img\\Block\\Grass.bmp");
+	gl.texture_load(&gl.undefined_texture, "img\\Block\\Undefined.bmp");
+	gl.texture_load(&gl.stone_texture, "img\\Block\\Stone.bmp");
+	gl.texture_load(&gl.wood_texture, "img\\Block\\Wood.bmp");
+	gl.texture_load(&gl.foliage_texture, "img\\Block\\Foliage.bmp");
+	gl.texture_load(&gl.iron_ore_texture, "img\\Block\\Iron ore.bmp");
+	gl.texture_load(&gl.dimond_ore_texture, "img\\Block\\Dimond ore.bmp");
+	gl.texture_load(&gl.gold_ore_texture, "img\\Block\\Gold ore.bmp");
+	gl.texture_load(&gl.soil_texture, "img\\Block\\Soil.bmp");
 }
 
 void World::show()
@@ -98,10 +80,9 @@ void World::show()
 	glTranslatef(-visible_part_world_by_player_x * 0.5, (-visible_part_world_by_player_y + 2) * 0.5, 0);
 	glTranslatef(0, visible_part_world_by_player_y - 2, 0);
 
-
-
 	block_render(0, block.size());
-	player_draw(player);
+
+	gl.player_draw(player);
 
 	glPopMatrix();
 }                               
@@ -125,7 +106,11 @@ void World::block_render(int begin, int end)
 {
 	for (int i = begin; i < end; ++i)
 		for (int n = 0; n < block[i].size(); ++n) {
-			if (!block[i][n].isEmpty())
-				block_draw(block[i][n]);
+			if (!block[i][n].isEmpty()) {
+				if ((block[i][n].type_block == Grass) && (block[i - 1][n].type_block != 0)) {
+					block[i][n].type_block = Soil;
+				}
+				gl.block_draw(block[i][n]);
+			}
 		}
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <thread>
+#include "GL.h"
 #include "Player.h"
 #include "Block.h"
 #include "../size.h"
@@ -20,5 +21,6 @@ private:
 	void block_render(int begin, int end);
 	Player player;
 	std::vector<std::vector<Block>> block;
+	GL gl;
 };
 

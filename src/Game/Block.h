@@ -6,6 +6,9 @@
 #include "../type.h"
 
 class Player;
+class Mob;
+class GL;
+class World;
 
 class Block
 {
@@ -17,7 +20,8 @@ public:
 	~Block();
 	friend Player;
 	friend Mob;
-	friend void block_draw(Block draw);
+	friend GL;
+	friend World;
 private:
 	uint32_t type_block = Empty;
 	float x, y;

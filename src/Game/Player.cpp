@@ -121,12 +121,16 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 		{
 			for (int j = 0; j < block[i].size(); ++j)
 			{
-				if (((int)round(block[i][j].x) == iX) &&
-					((int)round(block[i][j].y) == -iY) &&
-					(block[i][j].isEmpty()))
+				//ростояния куда можно ставить блок
+				if (((x + 3.5) >= iX && iX >= (x - 3.5)) && ((y + 3.5) >= -iY && (y - 3.5) <= -iY)) 
 				{
-					block[i][j].type_block = Grass;
-					return;
+					if (((int)round(block[i][j].x) == iX) &&
+						((int)round(block[i][j].y) == -iY) &&
+						(block[i][j].isEmpty()))
+					{
+						block[i][j].type_block = Grass;
+						return;
+					}
 				}
 			}
 		}
@@ -138,10 +142,13 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 		{
 			for (int j = 0; j < block[i].size(); ++j)
 			{
-				if (((int)round(block[i][j].x) == iX) && ((int)round(block[i][j].y) == -iY) && (block[i][j].type_block != Bedrok))
+				if (((x + 3.5) >= iX && iX >= (x - 3.5)) && ((y + 3.5) >= -iY && (y - 3.5) <= -iY)) 
 				{
-					block[i][j].type_block = Empty;
-					return;
+					if (((int)round(block[i][j].x) == iX) && ((int)round(block[i][j].y) == -iY) && (block[i][j].type_block != Bedrok))
+					{
+						block[i][j].type_block = Empty;
+						return;
+					}
 				}
 			}
 		}
