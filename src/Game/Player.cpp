@@ -64,7 +64,7 @@ void Player::move(GLFWwindow* window, std::vector<std::vector<Block>>& block)
 
 void Player::horizon_move(std::vector<std::vector<Block>>& block, float dx)
 {
-	//это для проверки не столкнемся ли мы если подвижемся
+	//СЌС‚Рѕ РґР»СЏ РїСЂРѕРІРµСЂРєРё РЅРµ СЃС‚РѕР»РєРЅРµРјСЃСЏ Р»Рё РјС‹ РµСЃР»Рё РїРѕРґРІРёР¶РµРјСЃСЏ
 	x -= dx;
 	for (int i = 0; i < block.size(); ++i)
 	{
@@ -80,7 +80,7 @@ void Player::horizon_move(std::vector<std::vector<Block>>& block, float dx)
 		}
 	}
 	x += dx;
-	//лямда для свайпинга карты
+		//Р»СЏРјРґР° РґР»СЏ СЃРІР°Р№РїРёРЅРіР° РєР°СЂС‚С‹
 	auto f = [&](int begin, int end)
 	{
 		for (int i = begin; i < end; ++i)
@@ -121,7 +121,7 @@ void Player::put_blocks(GLFWwindow* window, std::vector<std::vector<Block>>& blo
 		{
 			for (int j = 0; j < block[i].size(); ++j)
 			{
-				//ростояния куда можно ставить блок
+				//Г°Г®Г±ГІГ®ГїГ­ГЁГї ГЄГіГ¤Г  Г¬Г®Г¦Г­Г® Г±ГІГ ГўГЁГІГј ГЎГ«Г®ГЄ
 				if (((x + 3.5) >= iX && iX >= (x - 3.5)) && ((y + 3.5) >= -iY && (y - 3.5) <= -iY)) 
 				{
 					if (((int)round(block[i][j].x) == iX) &&
